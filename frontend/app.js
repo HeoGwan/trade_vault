@@ -8,7 +8,7 @@
  */
 'use strict';
 
-const API = 'http://localhost:4000/api';
+const API = '/api';
 const PAGE_SIZE = 15;
 
 /* ── 상태 ── */
