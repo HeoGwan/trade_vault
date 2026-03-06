@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TradeVault — 거래 데이터 포털</title>
+    <meta name="description" content="안전한 로그인 후 거래 내역 데이터를 다운로드할 수 있는 기업용 포털 시스템입니다." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- 로그인 페이지 우상단 테마 토글 -->
+    <button id="theme-toggle-float" class="theme-toggle-float" aria-label="테마 전환" title="다크/라이트 모드 전환">
+        <!-- 달 (다크모드) -->
+        <svg class="icon-dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+        <!-- 해 (라이트모드) -->
+        <svg class="icon-light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+    </button>
+
+    <!-- ═══════════════════ LOGIN PAGE ═══════════════════ -->
+    <div id="login-page" class="page active">
+        <div class="login-bg">
+            <div class="bg-orb orb1"></div>
+            <div class="bg-orb orb2"></div>
+            <div class="bg-orb orb3"></div>
+        </div>
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                                <path d="M4 14L14 4L24 14L14 24L4 14Z" fill="url(#lg1)" />
+                                <path d="M9 14L14 9L19 14L14 19L9 14Z" fill="white" opacity="0.8" />
+                                <defs>
+                                    <linearGradient id="lg1" x1="4" y1="4" x2="24" y2="24"
+                                        gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%" stop-color="#6366f1" />
+                                        <stop offset="100%" stop-color="#8b5cf6" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <span class="logo-text">TradeVault</span>
+                    </div>
+                    <h1 class="login-title">안녕하세요 👋</h1>
+                    <p class="login-subtitle">거래 데이터 포털에 로그인하세요</p>
+                </div>
+
+                <form id="login-form" class="login-form" novalidate>
+                    <div class="form-group">
+                        <label for="username" class="form-label">아이디</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            <input type="text" id="username" class="form-input" placeholder="아이디를 입력하세요"
+                                autocomplete="username" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">비밀번호</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                            <input type="password" id="password" class="form-input" placeholder="비밀번호를 입력하세요"
+                                autocomplete="current-password" />
+                            <button type="button" id="toggle-pw" class="pw-toggle" aria-label="비밀번호 표시 전환">
+                                <svg id="eye-show" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                                <svg id="eye-hide" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" style="display:none">
+                                    <path
+                                        d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                                    <line x1="1" y1="1" x2="23" y2="23" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="login-error" class="login-error" style="display:none">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        <span id="login-error-msg">아이디 또는 비밀번호가 올바르지 않습니다.</span>
+                    </div>
+
+                    <button type="submit" id="login-btn" class="btn-login">
+                        <span class="btn-text">로그인</span>
+                        <div class="btn-spinner" style="display:none">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+
+                <!-- 계정 힌트 테이블 -->
+                <div class="login-hint">
+                    <div class="hint-title">🔑 테스트 계정 목록</div>
+                    <table class="hint-table">
+                        <thead>
+                            <tr>
+                                <th>아이디</th>
+                                <th>비밀번호</th>
+                                <th>역할</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>admin</td>
+                                <td>Admin@1234</td>
+                                <td>최고관리자</td>
+                            </tr>
+                            <tr>
+                                <td>trader1</td>
+                                <td>Trader#2024</td>
+                                <td>선임트레이더</td>
+                            </tr>
+                            <tr>
+                                <td>manager</td>
+                                <td>Mgr$5678</td>
+                                <td>팀장</td>
+                            </tr>
+                            <tr>
+                                <td>analyst</td>
+                                <td>Analyst!9900</td>
+                                <td>데이터분석가</td>
+                            </tr>
+                            <tr>
+                                <td>guest</td>
+                                <td>Guest@0000</td>
+                                <td>조회전용</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════ DASHBOARD PAGE ═══════════════════ -->
+    <div id="dashboard-page" class="page">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
+                            <path d="M4 14L14 4L24 14L14 24L4 14Z" fill="url(#lg2)" />
+                            <path d="M9 14L14 9L19 14L14 19L9 14Z" fill="white" opacity="0.8" />
+                            <defs>
+                                <linearGradient id="lg2" x1="4" y1="4" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#6366f1" />
+                                    <stop offset="100%" stop-color="#8b5cf6" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <span class="logo-text">TradeVault</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">메인</div>
+                <a href="#" class="nav-item active">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    대시보드
+                </a>
+                <a href="#" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                    거래 내역
+                </a>
+                <a href="#" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    리포트
+                </a>
+            </nav>
+
+            <!-- 서버 상태 표시 -->
+            <div class="server-status">
+                <div class="status-dot" id="status-dot"></div>
+                <span class="status-text" id="status-text">서버 연결 중...</span>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">-</div>
+                    <div class="user-details">
+                        <div class="user-name" id="user-name-display">-</div>
+                        <div class="user-role" id="user-role-display">-</div>
+                    </div>
+                </div>
+                <!-- 테마 토글 -->
+                <button id="theme-toggle-sidebar" class="theme-toggle" aria-label="테마 전환" title="다크/라이트 모드 전환">
+                    <svg class="icon-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                    <svg class="icon-light" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg>
+                </button>
+                <button id="logout-btn" class="logout-btn" title="로그아웃">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-left">
+                    <h2 class="page-title">거래 데이터 센터</h2>
+                    <p class="page-subtitle">실시간 거래 내역을 조회하고 데이터를 다운로드하세요</p>
+                </div>
+                <div class="header-right">
+                    <div class="date-badge" id="current-date"></div>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <section class="stats-grid" aria-label="거래 통계">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon--blue">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23" />
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-label">총 거래금액</div>
+                        <div class="stat-value" id="stat-amount">-</div>
+                        <div class="stat-change positive">▲ 12.4% 전월 대비</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon--green">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                        </svg>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-label">총 거래 건수</div>
+                        <div class="stat-value" id="stat-count">-</div>
+                        <div class="stat-change positive">▲ 8.1% 전월 대비</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon--purple">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-label">완료 거래</div>
+                        <div class="stat-value" id="stat-complete">-</div>
+                        <div class="stat-change positive">▲ 5.7% 전월 대비</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon--amber">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-label">처리중 거래</div>
+                        <div class="stat-value" id="stat-pending">-</div>
+                        <div class="stat-change negative">▼ 2.3% 전월 대비</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Download Section -->
+            <section class="download-section">
+                <div class="section-header">
+                    <h3 class="section-title">데이터 다운로드</h3>
+                    <p class="section-desc">서버에서 직접 파일을 생성하여 다운로드합니다. 현재 필터가 적용됩니다.</p>
+                </div>
+                <div class="download-cards">
+                    <div class="download-card">
+                        <div class="dl-icon dl-icon--green">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                            </svg>
+                        </div>
+                        <div class="dl-info">
+                            <div class="dl-title">CSV 다운로드</div>
+                            <div class="dl-desc">Excel · Google Sheets 호환</div>
+                            <div class="dl-meta" id="csv-meta">전체 데이터</div>
+                        </div>
+                        <button id="btn-download-csv" class="btn-download btn-download--primary">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            CSV 다운로드
+                        </button>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="dl-icon dl-icon--blue">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
+                            </svg>
+                        </div>
+                        <div class="dl-info">
+                            <div class="dl-title">JSON 다운로드</div>
+                            <div class="dl-desc">API 연동 · 개발자용 형식</div>
+                            <div class="dl-meta" id="json-meta">전체 데이터</div>
+                        </div>
+                        <button id="btn-download-json" class="btn-download btn-download--secondary">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            JSON 다운로드
+                        </button>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="dl-icon dl-icon--purple">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                            </svg>
+                        </div>
+                        <div class="dl-info">
+                            <div class="dl-title">필터 적용 CSV</div>
+                            <div class="dl-desc">현재 검색·필터 조건 적용</div>
+                            <div class="dl-meta" id="filtered-meta">필터 없음</div>
+                        </div>
+                        <button id="btn-download-filtered" class="btn-download btn-download--ghost">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            필터 다운로드
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trade Table -->
+            <section class="table-section">
+                <div class="table-header">
+                    <div class="table-header-left">
+                        <h3 class="section-title">거래 내역</h3>
+                        <span class="record-count" id="record-count">-</span>
+                    </div>
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                            <input type="text" id="search-input" class="search-input"
+                                placeholder="거래번호, 종목, 거래처 검색..." />
+                        </div>
+                        <select id="status-filter" class="filter-select">
+                            <option value="all">전체 상태</option>
+                            <option value="완료">완료</option>
+                            <option value="처리중">처리중</option>
+                            <option value="취소">취소</option>
+                        </select>
+                        <select id="type-filter" class="filter-select">
+                            <option value="all">전체 유형</option>
+                            <option value="매수">매수</option>
+                            <option value="매도">매도</option>
+                            <option value="이체">이체</option>
+                        </select>
+                        <button id="btn-refresh" class="btn-refresh" title="새로고침">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="23 4 23 10 17 10" />
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 로딩 오버레이 -->
+                <div id="table-loading" class="table-loading">
+                    <div class="loading-spinner"></div>
+                    <span>데이터 로드 중...</span>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="trade-table">
+                        <thead>
+                            <tr>
+                                <th>거래번호</th>
+                                <th>거래일시</th>
+                                <th>종목명</th>
+                                <th>섹터</th>
+                                <th>유형</th>
+                                <th>수량</th>
+                                <th>단가</th>
+                                <th>거래금액</th>
+                                <th>거래처</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trade-tbody"></tbody>
+                    </table>
+                </div>
+
+                <div class="table-pagination">
+                    <span class="pagination-info" id="pagination-info">-</span>
+                    <div class="pagination-controls">
+                        <button id="page-prev" class="page-btn" disabled>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="15 18 9 12 15 6" />
+                            </svg>
+                        </button>
+                        <span id="page-indicator" class="page-indicator">1 / 1</span>
+                        <button id="page-next" class="page-btn">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast" role="alert" aria-live="polite">
+        <span id="toast-icon" class="toast-icon"></span>
+        <span id="toast-msg"></span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
